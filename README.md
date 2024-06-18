@@ -22,6 +22,19 @@ Synchronize with the remote repository with `git fetch --all` and `git merge ori
 
 Prepare for team usage with `git add . --all` and `git commit -m "Initial commit"`.
 
+Checkout this repository on your computer with:
+`git clone https://github.com/asishallab-group/SDAM_06_and_07_Data_Model_and_Server_Programming.git`
+
+#### Git work cycle 
+
+Details in the Git Book's Getting Started Section.
+
+- git status
+- git fetch --all
+- if necessary: git merge
+- git add
+- git commit
+- git push
 
 ## Multipart form data
 
