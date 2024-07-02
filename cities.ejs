@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>My Cities</h1>
+<p>
+  <table id="city_table">
+    <tr>
+      <th>City-ID</th><th>Name</th><th>Population</th>
+    </tr>
+    <% for (const city of cities) { %>
+      <tr>
+        <td><%= city.city_ID %></td>
+        <td><%= city.name %></td>
+        <td><%= city.population %></td>
+      </tr>
+    <% } %>
+  </table>
+</p>
+
+</body>
+</html> 

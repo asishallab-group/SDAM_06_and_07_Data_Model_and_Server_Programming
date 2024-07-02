@@ -1,3 +1,5 @@
+const searchArg = require('./searchArg.js')
+
 /** 
  * The Data Model City defines the format in which we represent City data
  */
@@ -49,7 +51,7 @@ class City {
   }
 
   /**
-   * Reads a City record from the database represented by argument `db_connection`.
+   * Reads a City record from the database represented by argument `id`.
    *
    * @param {string} id - the unique City's identifier
    * @param {object} db_connection - The connection to the SQLite database
@@ -61,6 +63,31 @@ class City {
     const db_res = await db_connection.get( sql, id );
     console.log(db_res);
     return new City(db_res);
+  }
+
+  /**
+   * Reads city records from the database represented by argument
+   * `db_connection`.
+   *
+   * @param {object} search_arg - The search arguments (see module
+   * './searchArg.js') 
+   * @param {object} order_arg - The order argument to sort the city records.
+   * Currently ignored (To Do)
+   * @param {object} pagination_arg - The pagination argument to select a
+   * subset of the city records. Currently ignored (To Do).
+   * @param {object} db_connection - The connection to the SQLite database
+   *
+   * @return {object} - The found City instance.
+   */
+  static async search(search_arg, order_arg, pagination_arg, db_connection) {
+    const searchSql = (search_arg !== undefined && search_arg !== null) ? searchArg.translateToSQL(search_arg) : "SELECT city_ID, name, population FROM cities";
+    console.log(`SQL generated to search City records:\n${JSON.stringify(searchSql)}`);
+    // To Do translate order_arg and pagination_arg to SQL
+
+    // Query the Database:
+    const dbResult = await db_connection.all(searchSql);
+    // Done:
+    return dbResult;
   }
 
   /**

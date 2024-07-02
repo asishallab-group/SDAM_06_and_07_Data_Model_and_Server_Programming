@@ -146,3 +146,16 @@ const c1 = new City(
 The function `updateOne` is an instance method and belongs to a record of the
 City data model.
 
+## Lecture eight
+
+Let's implement a graphical user interface (GUI) using HTML. We sent the server
+in the Request Header (see Http specification) what type of content we want,
+i.e. either
+* `--header "Accept: application/json"` or
+* `--header "Accept: text/html"`
+See `calls.sh` and `server.js` for details.
+
+Upon requesting HTML we want the server to generate HTML and send this back.
+
+We do this using a framework called "Embedded JavaScript" (`ejs`). This we need
+to install first using `npm install --save ejs`.

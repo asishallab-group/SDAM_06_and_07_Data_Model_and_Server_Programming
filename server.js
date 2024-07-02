@@ -12,8 +12,9 @@ app.use(express.urlencoded({
 const sqlite = require('sqlite')
 const sqlite3 = require('sqlite3')
 
+const ejs = require('ejs')
+
 // Our own modules are required below:
-const searchArg = require('./searchArg.js')
 const City = require('./city.js');
 
 // on what port should it listen:
@@ -41,17 +42,26 @@ app.get('/cities', async (req, res) => {
       driver: sqlite3.Database
     })
 
-    // Create the SQL:
-    const searchParam = req.body;
-    const searchSql = searchArg.translateToSQL(searchParam);
+    // Obtain the search argument from the request body:
+    // To Do: also obtain order_arg and pagination_arg!
+    const search_arg = req.body.search_arg;
 
     // Query the Database:
-    const dbResult = await db.get(searchSql);
+    const cities = await City.search(search_arg, undefined, undefined, db);
 
-    console.log(dbResult);
+    console.log(cities);
 
-    // Return the res:
-    res.json(dbResult)
+    // Return the result:
+    if ( req.accepts("html") ) {
+      ejs.renderFile('./cities.ejs', {cities}, {}, function(err, str) {
+        if (err) {
+          throw err;
+        }
+        res.send(str);
+      });
+    } else if ( req.accepts("json") ) {
+      res.json(cities)
+    } 
   } catch (e) {
     console.error(e);
     res.status(500);
